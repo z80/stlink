@@ -1,4 +1,5 @@
 CFLAGS+=-g
+CFLAGS+=-O0
 CFLAGS+=-DDEBUG
 CFLAGS+=-std=gnu99
 CFLAGS+=-Wall -Wextra

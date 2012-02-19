@@ -12,6 +12,7 @@ LDFLAGS+=`pkg-config --libs libusb-1.0`
 CFLAGS+=`pkg-config --cflags libusb-1.0`
 
 CFLAGS+=-g
+CFLAGS+=-O0
 CFLAGS+=-DDEBUG=1
 CFLAGS+=-std=gnu99
 CFLAGS+=-Wall -Wextra
