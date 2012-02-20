@@ -284,7 +284,7 @@ static inline unsigned int is_flash_busy(stlink_t *sl) {
 static void wait_flash_busy(stlink_t *sl) {
     /* todo: add some delays here */
     while (is_flash_busy(sl))
-        ;
+        usleep( 300000 );
 }
 
 static void wait_flash_busy_progress(stlink_t *sl) {
