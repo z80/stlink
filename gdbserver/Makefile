@@ -1,7 +1,7 @@
 PRG := st-util
 OBJS = gdb-remote.o gdb-server.o
 
-CFLAGS+=-g -Wall -Werror -std=gnu99 -I../src
+CFLAGS+=-O0 -g -Wall -Werror -std=gnu99 -I../src
 LDFLAGS=-L.. -lstlink
 
 # libusb location

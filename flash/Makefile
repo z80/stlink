@@ -1,3 +1,4 @@
+CFLAGS+=-O0
 CFLAGS+=-g
 CFLAGS+=-DDEBUG
 CFLAGS+=-std=gnu99
