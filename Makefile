@@ -11,6 +11,7 @@ LDFLAGS=-L. -lstlink
 LDFLAGS+=`pkg-config --libs libusb-1.0`
 CFLAGS+=`pkg-config --cflags libusb-1.0`
 
+CFLAGS+=-O0
 CFLAGS+=-g
 CFLAGS+=-O0
 CFLAGS+=-DDEBUG=1

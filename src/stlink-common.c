@@ -287,7 +287,7 @@ static int wait_flash_busy(stlink_t *sl) {
     /* todo: add some delays here */
     while ( is_flash_busy(sl) )
     {
-        usleep( 100000 );
+        usleep( dt );
         T -= dt;
         if ( T < 0 )
             return -1;
