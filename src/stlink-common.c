@@ -281,10 +281,18 @@ static inline unsigned int is_flash_busy(stlink_t *sl) {
 		return read_flash_sr(sl) & (1 << FLASH_SR_BSY);
 }
 
-static void wait_flash_busy(stlink_t *sl) {
+static int wait_flash_busy(stlink_t *sl) {
+    const int dt = 100000;
+    int T = 5000000;
     /* todo: add some delays here */
-    while (is_flash_busy(sl))
+    while ( is_flash_busy(sl) )
+    {
         usleep( 100000 );
+        T -= dt;
+        if ( T < 0 )
+            return -1;
+    }
+    return 0;
 }
 
 static void wait_flash_busy_progress(stlink_t *sl) {
@@ -1052,10 +1060,18 @@ int stlink_erase_flash_page(stlink_t *sl, stm32_addr_t flashaddr)
   else if (sl->core_id == STM32VL_CORE_ID)
   {
     /* wait for ongoing op to finish */
-    wait_flash_busy(sl);
+    if( wait_flash_busy(sl) < 0 )
+    {
+        printf( "ERROR: FLASH is totaly locked" );
+        return -1;
+    }
 
     /* unlock if locked */
-    unlock_flash_if(sl);
+    if ( unlock_flash_if(sl) < 0 )
+    {
+        printf( "unlock_flash_if() failed\n" );
+        return -1;
+    }
 
     /* set the page erase bit */
     set_flash_cr_per(sl);
@@ -1067,7 +1083,11 @@ int stlink_erase_flash_page(stlink_t *sl, stm32_addr_t flashaddr)
     set_flash_cr_strt(sl);
 
     /* wait for completion */
-    wait_flash_busy(sl);
+    if ( wait_flash_busy(sl) < 0 )
+    {
+        printf( "FLASH is locked too long after erase" );
+        return -1;
+    }
 
     /* relock the flash */
     lock_flash(sl);
