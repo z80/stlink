@@ -139,7 +139,7 @@ int main(int ac, char** av)
 	err = stlink_fwrite_sram(sl, o.filename, o.addr);
 	if (err == -1)
 	{
-	    printf("stlink_sram_flash() == -1\n");
+	    printf("stlink_fwrite_sram() == -1\n");
 	    goto on_error;
 	}
    }
